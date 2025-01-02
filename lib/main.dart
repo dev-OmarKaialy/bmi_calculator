@@ -1,12 +1,23 @@
+import 'package:bmi_calculator/bmi_brain.dart';
+import 'package:bmi_calculator/result.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MaterialApp(home: MainApp()));
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
 
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  bool isMale = false;
+  int height = 120;
+  int weight = 75;
+  int age = 45;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,24 +47,37 @@ class MainApp extends StatelessWidget {
                       child: Row(
                         children: [
                           Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: const Color(0xff24263b),
-                                  borderRadius: BorderRadius.circular(12)),
-                              child: const Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Icon(
-                                    Icons.male,
-                                    size: 75,
-                                    color: Colors.white,
-                                  ),
-                                  Text(
-                                    'Male',
-                                    style: TextStyle(color: Colors.white),
-                                  )
-                                ],
+                            child: GestureDetector(
+                              onTap: () {
+                                isMale = true;
+                                print(isMale);
+                                setState(() {});
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: isMale
+                                        ? const Color(0xff24263b)
+                                        : const Color(0xff333244),
+                                    borderRadius: BorderRadius.circular(12)),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    const Icon(
+                                      Icons.male,
+                                      size: 75,
+                                      color: Colors.white,
+                                    ),
+                                    Text(
+                                      'Male',
+                                      style: TextStyle(
+                                          fontSize: isMale ? 24 : null,
+                                          fontWeight:
+                                              isMale ? FontWeight.bold : null,
+                                          color: Colors.white),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -61,24 +85,37 @@ class MainApp extends StatelessWidget {
                             width: 10,
                           ),
                           Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: const Color(0xff333244),
-                                  borderRadius: BorderRadius.circular(12)),
-                              child: const Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Icon(
-                                    Icons.female,
-                                    color: Colors.white,
-                                    size: 75,
-                                  ),
-                                  Text(
-                                    'Female',
-                                    style: TextStyle(color: Colors.white),
-                                  )
-                                ],
+                            child: GestureDetector(
+                              onTap: () {
+                                isMale = false;
+                                print(isMale);
+                                setState(() {});
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: !isMale
+                                        ? const Color(0xff24263b)
+                                        : const Color(0xff333244),
+                                    borderRadius: BorderRadius.circular(12)),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    const Icon(
+                                      Icons.female,
+                                      color: Colors.white,
+                                      size: 75,
+                                    ),
+                                    Text(
+                                      'Female',
+                                      style: TextStyle(
+                                          fontSize: !isMale ? 24 : null,
+                                          fontWeight:
+                                              !isMale ? FontWeight.bold : null,
+                                          color: Colors.white),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -108,18 +145,26 @@ class MainApp extends StatelessWidget {
                                     style: IconButton.styleFrom(
                                         backgroundColor:
                                             const Color(0xff8B8C9E)),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      height--;
+                                      print(height);
+                                      setState(() {});
+                                    },
                                     icon: const Icon(Icons.remove)),
-                                const Text(
-                                  '150',
-                                  style: TextStyle(
+                                Text(
+                                  height.toString(),
+                                  style: const TextStyle(
                                       color: Colors.white, fontSize: 32),
                                 ),
                                 IconButton.filled(
                                     style: IconButton.styleFrom(
                                         backgroundColor:
                                             const Color(0xff8B8C9E)),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      height++;
+                                      setState(() {});
+                                      print(height);
+                                    },
                                     icon: const Icon(Icons.add)),
                               ],
                             ),
@@ -147,9 +192,9 @@ class MainApp extends StatelessWidget {
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 24),
                                   ),
-                                  const Text(
-                                    '65',
-                                    style: TextStyle(
+                                  Text(
+                                    weight.toString(),
+                                    style: const TextStyle(
                                         color: Colors.white, fontSize: 24),
                                   ),
                                   Row(
@@ -160,13 +205,19 @@ class MainApp extends StatelessWidget {
                                           style: IconButton.styleFrom(
                                               backgroundColor:
                                                   const Color(0xff8B8C9E)),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            weight--;
+                                            setState(() {});
+                                          },
                                           icon: const Icon(Icons.remove)),
                                       IconButton.filled(
                                           style: IconButton.styleFrom(
                                               backgroundColor:
                                                   const Color(0xff8B8C9E)),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            weight++;
+                                            setState(() {});
+                                          },
                                           icon: const Icon(Icons.add))
                                     ],
                                   )
@@ -191,9 +242,9 @@ class MainApp extends StatelessWidget {
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 24),
                                   ),
-                                  const Text(
-                                    '40',
-                                    style: TextStyle(
+                                  Text(
+                                    age.toString(),
+                                    style: const TextStyle(
                                         color: Colors.white, fontSize: 24),
                                   ),
                                   Row(
@@ -204,13 +255,19 @@ class MainApp extends StatelessWidget {
                                           style: IconButton.styleFrom(
                                               backgroundColor:
                                                   const Color(0xff8B8C9E)),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            age--;
+                                            setState(() {});
+                                          },
                                           icon: const Icon(Icons.remove)),
                                       IconButton.filled(
                                           style: IconButton.styleFrom(
                                               backgroundColor:
                                                   const Color(0xff8B8C9E)),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            age++;
+                                            setState(() {});
+                                          },
                                           icon: const Icon(Icons.add))
                                     ],
                                   )
@@ -228,15 +285,25 @@ class MainApp extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Container(
-              height: 100,
-              width: double.infinity,
-              color: const Color(0xffE83D67),
-              child: const Center(
-                  child: Text(
-                'CALCULATE',
-                style: TextStyle(color: Colors.white, fontSize: 28),
-              )),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return ResultScreen(
+                        bmi: CalculatorBrain().calculateBMI(weight, height));
+                  },
+                ));
+              },
+              child: Container(
+                height: 100,
+                width: double.infinity,
+                color: const Color(0xffE83D67),
+                child: const Center(
+                    child: Text(
+                  'CALCULATE',
+                  style: TextStyle(color: Colors.white, fontSize: 28),
+                )),
+              ),
             )
           ],
         ));

@@ -1,8 +1,9 @@
+import 'package:bmi_calculator/bmi_brain.dart';
 import 'package:flutter/material.dart';
 
 class ResultScreen extends StatelessWidget {
-  const ResultScreen({super.key});
-
+  const ResultScreen({super.key, required this.bmi});
+  final double bmi;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,16 +35,16 @@ class ResultScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12)),
               child: Column(
                 children: [
-                  const Text(
-                    'Normal',
-                    style: TextStyle(color: Colors.green, fontSize: 24),
-                  ),
-                  const Text(
-                    '19.52',
-                    style: TextStyle(color: Colors.white, fontSize: 50),
+                  Text(
+                    CalculatorBrain().getResult(bmi),
+                    style: const TextStyle(color: Colors.green, fontSize: 24),
                   ),
                   Text(
-                    'Lorem Ipsum' * 10,
+                    bmi.toStringAsFixed(1),
+                    style: const TextStyle(color: Colors.white, fontSize: 50),
+                  ),
+                  Text(
+                    CalculatorBrain().getInterpretation(bmi),
                     style: const TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ],
